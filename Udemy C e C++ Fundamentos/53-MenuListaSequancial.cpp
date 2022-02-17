@@ -55,8 +55,6 @@ void imprimeEncadeada(pessoa *ponteiroEncadeada){
 
         //Atualiza o cursor
         p= p->proximo;
-
-
     }
 
 
@@ -81,7 +79,162 @@ void adcComecoEncadeada(pessoa *&ponteiroEncadeada,string nome,int RG){
 
 }
 
+void adcFimEncadeada(pessoa *&ponteiroEncadeada,string nome,int RG){
 
+    //cria uma nova estrutura
+    pessoa *novoValor = new pessoa;
+    novoValor->nome = nome;
+    novoValor->RG = RG;
+
+        //Ponteiro cursor auxiliar
+    pessoa *p = ponteiroEncadeada;
+
+    while(p != NULL){
+
+        //quando chega ao ultimo elemento faz ele apontar para o novo valor
+        if(p->proximo == NULL){
+
+            p->proximo = novoValor;
+            return;
+        }
+
+        //Atualiza o cursor
+        p= p->proximo;
+    }
+}
+
+void adcPosicaoEncadeada(pessoa *&ponteiroEncadeada,string nome,int RG, int posicao){
+
+    //cria uma nova estrutura
+    pessoa *novoValor = new pessoa;
+    novoValor->nome = nome;
+    novoValor->RG = RG;
+    novoValor->proximo = NULL;
+
+        //Ponteiro cursor auxiliar
+    pessoa *p = ponteiroEncadeada;
+
+    //contador de posicoes
+    int cont = 0;
+
+    while(cont <= posicao){
+
+        //quando chega um antes da posicao desejada
+        if(cont <= posicao -1){
+
+            //auxiliar do valor
+            pessoa *aux = new pessoa;
+            //armazena o proximo valor
+            aux->proximo = p->proximo;
+            //coloca o novo valor como o proximo dele
+            p->proximo = novoValor;
+            //faz com que o novo valor aponte para o proximo
+            novoValor->proximo = aux->proximo;
+
+            free(aux);
+        
+        }
+
+        //Atualiza o cursor
+        p= p->proximo;
+
+        cont ++;
+
+    }
+
+}
+
+void removeInicioEncadeada(pessoa *&ponteiroEncadeada){
+
+    //se so existir um menbro na lista
+    if(ponteiroEncadeada->proximo == NULL){
+        //cria uma nova estrutura
+        pessoa *novoValor = new pessoa;
+        novoValor->nome = "";
+        novoValor->RG = 0;
+        novoValor->proximo = NULL;
+
+        ponteiroEncadeada = novoValor;
+    }else{
+        //faz o ponteiro principal apontar para o proximo valor
+        ponteiroEncadeada = ponteiroEncadeada->proximo;
+    }
+}
+
+void removeFimEncadeada(pessoa *ponteiroEncadeada){
+
+    //auxiliares
+    pessoa *p = new pessoa;
+    pessoa *aux = new pessoa;
+
+    //ponteiro auxiliar
+    p = ponteiroEncadeada;
+
+    //passa pela lista
+    while(p->proximo != NULL){
+        //o auxiliar fica sendo um antes do cursor
+        aux = p;
+        //passa o cursor para o proximo elemento
+        p = p->proximo;
+    }
+
+    aux->proximo = NULL;
+}
+
+void removePosicaoEncadeada(pessoa *ponteiroEncadeada, int posicao){
+
+    //ponteiro cursor auxiliar
+    pessoa *p = ponteiroEncadeada;
+
+    //contador de posicoes
+    int cont = 0;
+
+    while(cont < posicao){
+
+        //quando chega um antes da posicao desejada
+        if(cont <= posicao -1){
+
+            //auxiliar do valor
+            pessoa *aux = new pessoa;
+            //auxiliar recebe elemento que sera eliminado
+            aux = p->proximo;
+            //faz com que o proximo pule um elemento
+            p->proximo = aux->proximo;
+
+            free(aux);
+        
+        }
+
+
+        //passa o cursor para o proximo elemento
+        p= p->proximo;
+
+        cont ++;
+    }
+}
+
+
+string retornaNomeEncadeada(pessoa *ponteiroEncadeada,int RG){
+
+    //Nome a ser retornado
+    string nome ="Nome não Encontrado!";
+
+    //ponteiro auxiliar
+    pessoa *p = ponteiroEncadeada;
+
+    //passa pela lista
+    while(p != NULL){
+        
+        if(p->RG == RG){
+            //recebe o nome do rg encontrado
+            nome = p->nome;
+        }
+        //passa o cursor para o proximo elemento
+        p = p->proximo;
+    }
+
+    return nome;
+}
 
 int main(){
 
@@ -142,7 +295,7 @@ int main(){
 
         //Variaveis para valores novos
         string nome;
-        int RG;
+        int RG,posicao;
 
         //chama a funcao desejada
         switch(funcaoDesejada){
@@ -159,111 +312,107 @@ int main(){
                 adcComecoEncadeada(ponteiroEncadeada,nome,RG);
 
                 break;
-        //     case 2:
-        //         cout << "Funcao escolhida: 2 - Insercao de node no fim da lista \n";
-        //         cout << "Digite um nome:" ;
-        //         cin >> nome;
-        //         cout << "Digite um RG:";
-        //         cin >> RG;
+            case 2:
+                cout << "Funcao escolhida: 2 - Insercao de node no fim da lista \n";
+                cout << "Digite um nome:" ;
+                cin >> nome;
+                cout << "Digite um RG:";
+                cin >> RG;
 
-        //         //se a lista for vazia usamos a funcao de criar o inicio
-        //         if(tamanhoDaLista == 0){
-        //             adcComecoSequencial(ponteiroSequencial,&tamanhoDaLista,nome,RG);
-        //         }else {
+                //se a lista for vazia usamos a funcao de criar o inicio
+                if(retornaTamanho(ponteiroEncadeada) == 0){
+                    adcComecoEncadeada(ponteiroEncadeada,nome,RG);                   
+                }else{
+                    adcFimEncadeada(ponteiroEncadeada,nome,RG);
+                }
 
-        //             adcFimSequencial(ponteiroSequencial,&tamanhoDaLista,nome,RG);
-        //         }
-                
+                break;
+            case 3:
 
-        //         break;
-        //     case 3:
+                cout << "Funcao escolhida: 3 - Insercao de node na posicao N\n";
+                cout << "Digite um nome:" ;
+                cin >> nome;
+                cout << "Digite um RG:";
+                cin >> RG;
+                cout << "Digite uma posicao:";
+                cin >> posicao;
 
-        //         cout << "Funcao escolhida: 3 - Insercao de node na posicao N\n";
-        //         cout << "Digite um nome:" ;
-        //         cin >> nome;
-        //         cout << "Digite um RG:";
-        //         cin >> RG;
-        //         cout << "Digite uma posicao:";
-        //         cin >> posicao;
+                //se estiver adicionando no comeco
+                if(posicao == 0){
+                    adcComecoEncadeada(ponteiroEncadeada,nome,RG);
+                }else if(posicao == retornaTamanho(ponteiroEncadeada)-1){
+                    //quando quer adicionar ao fim
+                    adcFimEncadeada(ponteiroEncadeada,nome,RG);
+                }else{
+                    //adiciona uma posicao especifica
+                    adcPosicaoEncadeada(ponteiroEncadeada,nome,RG,posicao);
 
-        //         //se estiver adicionando no comeco
-        //         if(posicao == 0){
-        //             adcComecoSequencial(ponteiroSequencial,&tamanhoDaLista,nome,RG);
-        //         }else if(posicao == tamanhoDaLista){
-        //             //quando quer adicionar ao fim
-        //             adcFimSequencial(ponteiroSequencial,&tamanhoDaLista,nome,RG);
-        //         }else{
-        //             //adiciona uma posicao especifica
-        //             adcPosicaoSequencial(ponteiroSequencial,&tamanhoDaLista,nome,RG,posicao);
+                }
+                break;
 
-        //         }
-        //         break;
+            case 4:
+                cout << "Funcao escolhida: 4 - Retirar um node do inicio da lista\n";
+                //se a lista for vazia usamos a funcao de criar o inicio
+                if(retornaTamanho(ponteiroEncadeada) == 0){
+                    cout << "\nLista Vazia!\n";
+                }else {
 
-        //     case 4:
-        //         cout << "Funcao escolhida: 4 - Retirar um node do inicio da lista\n";
-        //         //se a lista for vazia usamos a funcao de criar o inicio
-        //         if(tamanhoDaLista == 0){
-        //             cout << "\nLista Vazia!\n";
-        //         }else {
+                    removeInicioEncadeada(ponteiroEncadeada);
+                }
+                break;
+            case 5:
+                cout << "Funcao escolhida: 5 - Retirar um node no fim da lista\n";
 
-        //             removeInicioSequencial(ponteiroSequencial,&tamanhoDaLista);
-        //         }
-        //         break;
-        //     case 5:
-        //         cout << "Funcao escolhida: 5 - Retirar um node no fim da lista\n";
+                if(retornaTamanho(ponteiroEncadeada) == 1){
+                    removeInicioEncadeada(ponteiroEncadeada);
+                }else {
 
-        //         if(tamanhoDaLista == 0){
-        //             cout << "\nLista Vazia!\n";
-        //         }else {
-
-        //             removeFimSequencial(ponteiroSequencial,&tamanhoDaLista);
-        //         }
-        //         break;
-        //     case 6:
-        //         cout << "Funcao escolhida: 6 - Retiara um node na posicao N\n";
-
-        //         //verifica se a lista esta vazia
-        //         if(tamanhoDaLista == 0){
-        //             cout << "\nLista Vazia!\n";
-        //         }else{
-        //             cout << "Digite uma posicao:";
-        //             cin >> posicao;
+                    removeFimEncadeada(ponteiroEncadeada);
+                }
+                break;
+            case 6:
+                cout << "Funcao escolhida: 6 - Retiara um node na posicao N\n";
+                cout << "Digite uma posicao:";
+                cin >> posicao;
+                //verifica se a lista esta vazia
+                if(posicao == 0){
+                    cout << "\nLista Vazia!\n";
+                }else{
                     
-        //             if(posicao == 0){
-        //                 removeInicioSequencial(ponteiroSequencial,&tamanhoDaLista);
+                    if(posicao == 0){
+                        removeInicioEncadeada(ponteiroEncadeada);
 
-        //             }else if(posicao == tamanhoDaLista -1){
-        //                 removeFimSequencial(ponteiroSequencial,&tamanhoDaLista);
+                    }else if(retornaTamanho(ponteiroEncadeada)-1){
+                        removeFimEncadeada(ponteiroEncadeada);
 
-        //             }else{
-        //                 removePosicaoSequencial(ponteiroSequencial,&tamanhoDaLista, posicao);
-        //             }
+                    }else{
+                        removePosicaoEncadeada(ponteiroEncadeada,posicao);
+                    }
 
-        //         }
+                }
 
                 
-        //         break;
-        //     case 7:
-        //         cout << "Funcao escolhida: 7 - Procurar um node com o campo RG\n";
-        //         //verifica se a lista esta vazia
-        //         if(tamanhoDaLista == 0){
-        //             cout << "\nLista Vazia!\n";
-        //         }else{
-        //             cout << "Digite um RG:";
-        //             cin >> RG;
+                break;
+            case 7:
+                cout << "Funcao escolhida: 7 - Procurar um node com o campo RG\n";
+                //verifica se a lista esta vazia
+                if(retornaTamanho(ponteiroEncadeada) == 0){
+                    cout << "\nLista Vazia!\n";
+                }else{
+                    cout << "Digite um RG:";
+                    cin >> RG;
 
-        //             cout << "\nNome do rg:"<< retornaNomeSequencial(ponteiroSequencial,&tamanhoDaLista, RG) << "\n";
-                                
-                
-        //         break;
-        //     case 8:
-        //         cout << "Funcao escolhida: 8 - Imprimir a Lista\n";
-        //         //imprime a lista completa
-        //         imprimeSequencial(ponteiroSequencial,tamanhoDaLista);
-        //         break;
-        //     case 9:
-        //         cout << "Funcao escolhida: 9 - Sair do sistema\n";
-        //         break;
+                    cout << "\nNome do rg:" << retornaNomeEncadeada(ponteiroEncadeada,RG)<< "\n";                               
+                }
+                break;
+            case 8:
+                cout << "Funcao escolhida: 8 - Imprimir a Lista\n";
+                //imprime a lista completa
+                imprimeEncadeada(ponteiroEncadeada);
+                break;
+            case 9:
+                cout << "Funcao escolhida: 9 - Sair do sistema\n";
+                break;
 
         }
 
