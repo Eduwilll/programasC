@@ -18,8 +18,7 @@ int main(){
     
     printf("Digite segundo valor");
     scanf("%d",&n);
-
-   
+    
     printf("%d", mdc(m,n));
 }
 

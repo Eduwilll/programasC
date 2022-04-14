@@ -52,7 +52,7 @@ float * novo_vetor(float v[]){
         }
     }
     printf("\n ");
-    for(i = 0; i < MAX ; i++){ 
+    for(i = 0; i < j ; i++){ 
         printf("\n ");
         printf("indice[%d] = %1f ",i,v[i]);
     }

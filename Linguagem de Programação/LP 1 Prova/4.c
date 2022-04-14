@@ -29,12 +29,12 @@ int SomaDosPesos (Cell vet[],int tam);
 int main(){
     int i,tam,peso;
 
-   do
-   {
+    do
+    {
         printf("\nDigite a quantidades de elementos que ira inserir, tem de ser maior que Zero! :"); 
         scanf("%d", &tam);     
-   } while (tam < 0);
-   
+    } while (tam < 0);
+    
     Cell  vet[tam];
 
     for(i = 0 ; i < tam; i++){
@@ -54,7 +54,7 @@ int main(){
 
 int SomaDosPesos (Cell vet[],int tam){
     int i,aux = 0;
-   
+
     for(i= 0; i < tam ; i++){
         printf("\nFuncao:%c,%d",vet[i].car,vet[i].peso);
     }

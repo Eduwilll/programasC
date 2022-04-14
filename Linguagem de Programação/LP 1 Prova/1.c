@@ -93,7 +93,6 @@ int ValidaMes(Data mes[],int tam){
     for(i=0; i < tam; i++ ){
         if( mes[i].mes > 12 || mes[i].mes <1){
             printf("Mes invalido");
-           
         }
         else if(mes[i].mes == 2){
             dias -=2;

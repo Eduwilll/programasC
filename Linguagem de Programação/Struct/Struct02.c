@@ -22,7 +22,7 @@ int main() {
 
     for(i=0; i<5; i++) {
         printf("%d - Ra: %d \t Idade: %d\n", i,
-               estudantes[i].ra, estudantes[i].idade);
+        estudantes[i].ra, estudantes[i].idade);
         mediaIdade = mediaIdade + estudantes[i].idade;
     }
 

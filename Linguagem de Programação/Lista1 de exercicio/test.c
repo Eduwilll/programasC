@@ -1,5 +1,5 @@
 #include <stdio.h>
- 
+
 int main(void) {
     printf("Strings:\n");
     const char* s = "Hello";

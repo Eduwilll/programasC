@@ -49,7 +49,7 @@ double media(double vet[], int n, int *i){
     for(j=0;j<n;j++){
       if(vetAux[j] < posicaoMenor ){
         posicaoMenor = vetAux[j];
-         i = j;
+        i = j;
       }
 
     }

@@ -25,8 +25,6 @@ int menor_base_log(int n){
     for(b=1; b <= n ;b++){
         for(k=1; k <= n ; k++){
             printf("\nB:%d K:%d", b,k);
-           
-  
         }
     }
 }
